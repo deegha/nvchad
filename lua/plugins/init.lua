@@ -32,8 +32,31 @@ return {
         "typescript-language-server",
         "eslint-lsp",
         "prettierd",
+        "gopls",
       },
     },
+  },
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup {
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          debounce = 75,
+          keymap = {
+            accept = "<C-j>",
+            accept_word = false,
+            accept_line = false,
+            next = "<M-]>",
+            prev = "<M-[>",
+            dismiss = "<C-]>",
+          },
+        },
+      }
+    end,
   },
   {
     "windwp/nvim-ts-autotag",
@@ -41,11 +64,21 @@ return {
       "javascript",
       "javascriptreact",
       "typescript",
-      "typescriptreact"
+      "typescriptreact",
     },
-    config = function ()
-     require("nvim-ts-autotag").setup()
-    end
+    config = function()
+      require("nvim-ts-autotag").setup()
+    end,
+  },
+  {
+    "olexsmir/gopher.nvim",
+    ft = "go",
+    config = function(_, opts)
+      require("gopher").setup(opts)
+    end,
+    build = function()
+      vim.cmd [[silent! GoInstallDeps]]
+    end,
   },
   {
     "nvim-treesitter/nvim-treesitter",
